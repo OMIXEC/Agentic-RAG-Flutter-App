@@ -1,0 +1,68 @@
+Unofficial Transcript
+
+
+Current Degree Objective
+Degree Name	Degree Title
+MAJOR	Master of Science	Computer Science
+
+
+Cumulative GPA through 20251
+Uatt	Uern	Uavl	Gpts	GPAU	GPA
+UGrad	76.0	76.0	76.0	254.80	76.0	3.35
+Grad	14.0	14.0	14.0	53.60	14.0	3.82
+Law	0.0	0.0	0.0	0.00	0.0	0.00
+Other	0.0	0.0	0.0	0.00	0.0	0.00
+
+
+Definition of Grades
+
+
+Spring Term 2022
+Course	Units Earned	Grade	Course Description
+PHIL-166gw	4.0	A	Current Moral and Social Issues
+EE-109L	4.0	B	Introduction to Embedded Systems
+CSCI-104L	4.0	B+	Data Structures and Object Oriented Design
+PHYS-152L	4.0	B	Fundamentals of Physics II: Electricity and Magnetism
+
+
+Summer Term 2022
+Course	Units Earned	Grade	Course Description
+SOCI-200mg	4.0	A	Introduction to Sociology
+
+
+Fall Term 2022
+Course	Units Earned	Grade	Course Description
+CSCI-201	4.0	A	Principles of Software Development
+MATH-225	4.0	B	Linear Algebra and Linear Differential Equations
+ITP-368	4.0	A	Programming Graphical User Interfaces
+CSCI-270	4.0	B+	Introduction to Algorithms and Theory of Computing
+
+
+Spring Term 2023
+Course	Units Earned	Grade	Course Description
+ITP-380	4.0	A-	Video Game Programming
+MATH-407	4.0	D+	Probability Theory
+CSCI-360	4.0	A-	Introduction to Artificial Intelligence
+CSCI-356	4.0	B-	Introduction to Computer Systems
+
+
+Fall Term 2023
+Course	Units Earned	Grade	Course Description
+CSCI-310	4.0	A-	Software Engineering
+ITP-303	4.0	A	Full-Stack Web Development
+WRIT-340	4.0	A	Advanced Writing
+CSCI-353	4.0	C	Introduction to Internetworking
+
+
+Spring Term 2024
+Course	Units Earned	Grade	Course Description
+CSCI-526	4.0	A	Advanced Mobile Devices and Game Consoles
+CTIN-503	2.0	A	Interactive Entertainment, Science, and Healthcare
+CSCI-350	4.0	B	Introduction to Operating Systems
+CSCI-401	4.0	A	Capstone: Design and Construction of Large Software Systems
+
+
+Fall Term 2024
+Course	Units Earned	Grade	Course Description
+CSCI-572	4.0	A-	Information Retrieval and Web Search Engines
+CSCI-576	4.0	A-	Multimedia Systems Design
