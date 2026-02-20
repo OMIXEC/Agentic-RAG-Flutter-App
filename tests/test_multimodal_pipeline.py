@@ -249,10 +249,12 @@ class MultimodalPipelineTests(unittest.TestCase):
             f.write(b"\x00" * 100)
             audio_path = Path(f.name)
 
+        # Use a long enough transcript to exceed min_chars (80) so chunking produces output
+        long_transcript = "This is a detailed audio transcript containing enough text to exceed the minimum chunk character threshold for testing purposes."
         # Force native embed to fail → trigger fallback transcript path
         with mock.patch.object(provider, "_embed_audio", return_value=[]):
             with mock.patch.object(
-                provider, "_transcribe_fallback", return_value="hello world transcript"
+                provider, "_transcribe_fallback", return_value=long_transcript
             ):
                 with mock.patch.object(
                     provider, "_embed_text", return_value=[0.3] * 1024
@@ -285,10 +287,11 @@ class MultimodalPipelineTests(unittest.TestCase):
             vid_path = Path(f.name)
 
         try:
-            # Simulate a 30MB file (over the 20MB default)
+            # Simulate a 30MB file (over the 20MB default).
+            # Must patch at class level since PosixPath instances are read-only.
             mock_stat = mock.Mock()
             mock_stat.st_size = 30 * 1024 * 1024
-            with mock.patch.object(vid_path, "stat", return_value=mock_stat):
+            with mock.patch.object(Path, "stat", return_value=mock_stat):
                 targets = provider.build_video_targets(vid_path, "big video")
         finally:
             vid_path.unlink(missing_ok=True)
