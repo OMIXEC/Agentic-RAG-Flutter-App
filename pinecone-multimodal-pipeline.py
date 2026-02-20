@@ -1306,7 +1306,13 @@ class AwsNovaProvider(BaseProvider):
 
         transcript = self._transcribe_fallback(file_path)
         targets: list[IndexTarget] = []
-        for chunk in _chunk_text(transcript):
+        for chunk in chunk_text_with_strategy(
+            transcript,
+            self.config.chunk_strategy,
+            self.config.chunk_max_chars,
+            self.config.chunk_min_chars,
+            self.config.chunk_overlap_chars,
+        ):
             text_vector = self._embed_text(chunk)
             if text_vector:
                 targets.append(
