@@ -5,12 +5,12 @@
 
 ## Current Position
 
-**Phase:** 01-openai-enhancement (complete — all 3 plans executed)
-**Plan:** 3 of 3 in current phase
-**Status:** Phase complete
-**Last activity:** 2026-02-20 - Completed 01-03-PLAN.md
+**Phase:** 02-aws-nova-integration (in progress)
+**Plan:** 1 of 3 in current phase
+**Status:** In progress
+**Last activity:** 2026-02-20 - Completed 02-01-PLAN.md
 
-Progress: ███░░░░░░░ 30% (3/10 estimated plans)
+Progress: ████░░░░░░ 40% (4/10 estimated plans)
 
 ## Tech Stack
 
@@ -35,6 +35,8 @@ Progress: ███░░░░░░░ 30% (3/10 estimated plans)
 4. **Dimension separation** - Each provider/dimension combination gets its own Pinecone index
 5. **CLIP dimension warnings (not exceptions)** - Mismatch between model name and config dimension is surfaced via print() to allow user choice; Pinecone preflight handles hard enforcement
 6. **CLIP model auto-detection** - `_resolve_clip_expected_dim()` maps model name to dimension; OPENAI_CLIP_EMBEDDING_DIMENSION can override
+7. **Nova video size guard returns [] not raises** - Oversized files (>20MB) skip embed cleanly; raising would crash the entire ingestion run
+8. **AWS_NOVA_VIDEO_MAX_BYTES default = 20MB** - Base64 encoding adds ~33% overhead; 20MB raw → ~26.7MB encoded is near Bedrock's 25MB limit; margin prevents payload rejection
 
 ## Active Concerns
 
@@ -44,8 +46,8 @@ Progress: ███░░░░░░░ 30% (3/10 estimated plans)
 
 ## Session Continuity
 
-**Last session:** 2026-02-20 03:58 UTC
-**Stopped at:** Completed 01-03-PLAN.md
+**Last session:** 2026-02-20 04:13 UTC
+**Stopped at:** Completed 02-01-PLAN.md
 **Resume file:** None
 
 ## File Ownership Map
