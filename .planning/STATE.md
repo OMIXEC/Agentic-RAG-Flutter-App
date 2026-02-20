@@ -5,12 +5,12 @@
 
 ## Current Position
 
-**Phase:** 03-vertex-ai-enhancement (in progress)
-**Plan:** 1 of 2 in current phase
-**Status:** In progress
-**Last activity:** 2026-02-20 - Completed 03-01-PLAN.md
+**Phase:** 03-vertex-ai-enhancement (complete)
+**Plan:** 2 of 2 in current phase
+**Status:** Phase complete
+**Last activity:** 2026-02-20 - Completed 03-02-PLAN.md
 
-Progress: ███████░░░ 70% (7/10 estimated plans)
+Progress: ████████░░ 80% (8/10 estimated plans)
 
 ## Tech Stack
 
@@ -45,6 +45,8 @@ Progress: ███████░░░ 70% (7/10 estimated plans)
 14. **Nova defaults corrected to 3072d** - 3072d is the AWS-documented native maximum for amazon.nova-2-multimodal-embeddings-v1; prior 1024d default was a placeholder
 15. **pinecone_index_aws_nova_1024 attribute name preserved** - Renaming Python attribute would break existing tests and configs; field name left as-is even after Nova default correction to 3072d
 16. **PINECONE_INDEX_VERTEX_1408 locked name** - .env_sample uses 'multimodal-embedding-vertex-1408d' as the locked naming convention for Vertex indexes
+17. **Nova defaults test uses os.environ.pop() inside patch.dict context** - mock.patch.dict(clear=False) only adds/updates; pop() is needed to remove pre-existing shell env vars so default assertions are reliable
+18. **Vertex warning test mutates cfg directly** - cfg.google_vertex_embedding_dimension = 999 bypasses from_env() to test validate() path in isolation without env var patching
 
 ## Active Concerns
 
@@ -54,8 +56,8 @@ Progress: ███████░░░ 70% (7/10 estimated plans)
 
 ## Session Continuity
 
-**Last session:** 2026-02-20 14:27 UTC
-**Stopped at:** Completed 03-01-PLAN.md (Vertex dimension validation + Nova defaults)
+**Last session:** 2026-02-20 14:35 UTC
+**Stopped at:** Completed 03-02-PLAN.md (4 validation tests, 26 total passing)
 **Resume file:** None
 
 ## File Ownership Map
@@ -65,4 +67,4 @@ Progress: ███████░░░ 70% (7/10 estimated plans)
 | pinecone-multimodal-pipeline.py | Main pipeline with `_chunk_text()`, providers, `_VERTEX_ALLOWED_DIMS` |
 | backend/config.py | FastAPI settings dataclass |
 | .env_sample | Environment variable template (8 Vertex vars documented) |
-| tests/test_multimodal_pipeline.py | 22 tests covering all providers and Nova multimodal paths |
+| tests/test_multimodal_pipeline.py | 26 tests: all providers, validation paths, dimension guards |
