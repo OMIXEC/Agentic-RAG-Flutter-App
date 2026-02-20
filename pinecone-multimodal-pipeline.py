@@ -3,6 +3,7 @@ import base64
 import hashlib
 import json
 import os
+import re
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -67,22 +68,178 @@ def _collect_files(folder: Path, extensions: set[str]) -> list[Path]:
     return sorted(files)
 
 
-def _chunk_text(text: str, max_chars: int = 1200, min_chars: int = 80) -> list[str]:
+def _chunk_text(
+    text: str,
+    max_chars: int = 1200,
+    min_chars: int = 80,
+    overlap_chars: int = 0,
+) -> list[str]:
+    """
+    Split text into chunks with optional overlap.
+
+    Args:
+        text: Input text to chunk
+        max_chars: Maximum characters per chunk
+        min_chars: Minimum characters for a valid chunk
+        overlap_chars: Characters to overlap between adjacent chunks
+
+    Returns:
+        List of text chunks
+    """
     chunks: list[str] = []
     pending = ""
+
     for part in text.split("\n\n"):
         block = part.strip()
         if not block:
             continue
+
         if len(pending) + len(block) + 2 <= max_chars:
             pending = f"{pending}\n\n{block}".strip()
         else:
             if len(pending) >= min_chars:
                 chunks.append(pending)
             pending = block
+
     if len(pending) >= min_chars:
         chunks.append(pending)
+
+    # Apply overlap if configured
+    if overlap_chars > 0 and len(chunks) > 1:
+        overlapped: list[str] = []
+        for i, chunk in enumerate(chunks):
+            if i == 0:
+                # First chunk: append from next
+                if i + 1 < len(chunks):
+                    suffix = chunks[i + 1][:overlap_chars]
+                    overlapped.append(f"{chunk}\n...{suffix}")
+                else:
+                    overlapped.append(chunk)
+            elif i == len(chunks) - 1:
+                # Last chunk: prepend from previous
+                prefix = chunks[i - 1][-overlap_chars:]
+                overlapped.append(f"{prefix}...\n{chunk}")
+            else:
+                # Middle chunk: prepend and append
+                prefix = chunks[i - 1][-overlap_chars:]
+                suffix = chunks[i + 1][:overlap_chars]
+                overlapped.append(f"{prefix}...\n{chunk}\n...{suffix}")
+        return overlapped
+
     return chunks
+
+
+def _split_sentences(text: str) -> list[str]:
+    """Split text into sentences using regex patterns."""
+    # Pattern matches sentence-ending punctuation followed by space or end
+    sentence_endings = re.compile(r"(?<=[.!?])\s+(?=[A-Z])")
+    sentences = sentence_endings.split(text)
+    return [s.strip() for s in sentences if s.strip()]
+
+
+def _chunk_semantic(
+    text: str,
+    max_chars: int = 1200,
+    min_chars: int = 80,
+    overlap_chars: int = 0,
+) -> list[str]:
+    """
+    Chunk text respecting sentence boundaries.
+
+    Groups sentences into chunks that don't exceed max_chars,
+    preferring to break at paragraph boundaries when possible.
+    """
+    paragraphs = text.split("\n\n")
+    chunks: list[str] = []
+    current_chunk: list[str] = []
+    current_length = 0
+
+    for para in paragraphs:
+        para = para.strip()
+        if not para:
+            continue
+
+        sentences = _split_sentences(para)
+
+        for sentence in sentences:
+            sent_len = len(sentence)
+
+            if current_length + sent_len + 1 <= max_chars:
+                current_chunk.append(sentence)
+                current_length += sent_len + 1
+            else:
+                # Flush current chunk if it meets minimum
+                if current_chunk and sum(len(s) for s in current_chunk) >= min_chars:
+                    chunks.append(" ".join(current_chunk))
+
+                # Start new chunk with this sentence
+                current_chunk = [sentence]
+                current_length = sent_len
+
+        # End of paragraph - flush if we have enough
+        if current_chunk and sum(len(s) for s in current_chunk) >= min_chars:
+            chunk_text = " ".join(current_chunk)
+            if not chunks or chunks[-1] != chunk_text:
+                chunks.append(chunk_text)
+            current_chunk = []
+            current_length = 0
+
+    # Handle remaining content
+    if current_chunk and sum(len(s) for s in current_chunk) >= min_chars:
+        chunks.append(" ".join(current_chunk))
+
+    # Apply overlap (same logic as _chunk_text)
+    if overlap_chars > 0 and len(chunks) > 1:
+        overlapped: list[str] = []
+        for i, chunk in enumerate(chunks):
+            if i == 0:
+                if i + 1 < len(chunks):
+                    suffix = chunks[i + 1][:overlap_chars]
+                    overlapped.append(f"{chunk} ...{suffix}")
+                else:
+                    overlapped.append(chunk)
+            elif i == len(chunks) - 1:
+                prefix = chunks[i - 1][-overlap_chars:]
+                overlapped.append(f"{prefix}... {chunk}")
+            else:
+                prefix = chunks[i - 1][-overlap_chars:]
+                suffix = chunks[i + 1][:overlap_chars]
+                overlapped.append(f"{prefix}... {chunk} ...{suffix}")
+        return overlapped
+
+    return chunks
+
+
+def chunk_text_with_strategy(
+    text: str,
+    strategy: str,
+    max_chars: int = 1200,
+    min_chars: int = 80,
+    overlap_chars: int = 0,
+) -> list[str]:
+    """
+    Chunk text using the specified strategy.
+
+    Args:
+        text: Input text to chunk
+        strategy: Chunking strategy ("paragraph", "semantic", "recursive")
+        max_chars: Maximum characters per chunk
+        min_chars: Minimum characters for a valid chunk
+        overlap_chars: Characters to overlap between adjacent chunks
+
+    Returns:
+        List of text chunks
+    """
+    strategy = (strategy or "paragraph").lower().strip()
+
+    if strategy == "semantic":
+        return _chunk_semantic(text, max_chars, min_chars, overlap_chars)
+    elif strategy == "paragraph":
+        return _chunk_text(text, max_chars, min_chars, overlap_chars)
+    else:
+        # Default to paragraph for unknown strategies
+        print(f"Warning: Unknown chunking strategy '{strategy}', using 'paragraph'")
+        return _chunk_text(text, max_chars, min_chars, overlap_chars)
 
 
 def _hard_split_text(text: str, max_chars: int) -> list[str]:
@@ -1411,7 +1568,13 @@ def load_all(config: PipelineConfig, provider: BaseProvider, namespace: str) -> 
     for text_file in text_files:
         try:
             text = _read_text_file(text_file)
-            for chunk in _chunk_text(text):
+            for chunk in chunk_text_with_strategy(
+                text,
+                config.chunk_strategy,
+                config.chunk_max_chars,
+                config.chunk_min_chars,
+                config.chunk_overlap_chars,
+            ):
                 for target in provider.build_text_targets(
                     chunk, text_file, kind="text"
                 ):
@@ -1424,7 +1587,13 @@ def load_all(config: PipelineConfig, provider: BaseProvider, namespace: str) -> 
     for doc_file in doc_files:
         try:
             text = _extract_document_text(doc_file)
-            for chunk in _chunk_text(text):
+            for chunk in chunk_text_with_strategy(
+                text,
+                config.chunk_strategy,
+                config.chunk_max_chars,
+                config.chunk_min_chars,
+                config.chunk_overlap_chars,
+            ):
                 for target in provider.build_text_targets(chunk, doc_file, kind="doc"):
                     grouped.setdefault(target.index_name, []).append(
                         _to_pinecone_vector(target, config)
