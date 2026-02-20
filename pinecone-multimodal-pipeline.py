@@ -1122,6 +1122,10 @@ class VertexProvider(BaseProvider):
         ]
 
 
+# AwsNovaProvider: All modalities (text, image, video, audio) share a single
+# 1024-dimensional embedding space. AWS_NOVA_EMBEDDING_DIMENSION controls the
+# Bedrock request; AWS_NOVA_EXPECTED_DIMENSION controls the Pinecone preflight.
+# These must always match. Unlike OpenAI (text=3072, CLIP=512), Nova is unified.
 class AwsNovaProvider(BaseProvider):
     def __init__(self, config: PipelineConfig):
         super().__init__(config)
@@ -1136,6 +1140,19 @@ class AwsNovaProvider(BaseProvider):
         if not self.config.pinecone_index_aws_nova_1024:
             raise ValueError(
                 "PINECONE_INDEX_AWS_NOVA_1024 (or PINECONE_INDEX) is required for aws_nova provider"
+            )
+        # Warn if embedding dimension (what we request from Bedrock) doesn't match
+        # expected dimension (what Pinecone index was created with). They should always
+        # be equal for Nova — unlike CLIP where model dim and text dim can differ.
+        # Check: aws_nova_embedding_dimension == aws_nova_expected_dim
+        embed_dim = self.config.aws_nova_embedding_dimension
+        expected_dim = self.config.aws_nova_expected_dim
+        if embed_dim != expected_dim:
+            print(
+                f"[nova] WARNING: AWS_NOVA_EMBEDDING_DIMENSION={self.config.aws_nova_embedding_dimension} "
+                f"!= AWS_NOVA_EXPECTED_DIMENSION={self.config.aws_nova_expected_dim}. "
+                "Both values should be 1024 for amazon.nova-2-multimodal-embeddings-v1. "
+                "Pinecone preflight will enforce the expected dim and may reject upserts."
             )
 
     def text_index(self) -> str:
