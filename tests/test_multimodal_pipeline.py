@@ -531,6 +531,45 @@ class MultimodalPipelineTests(unittest.TestCase):
         print_calls = [args[0] for args, _ in print_mock.call_args_list if args]
         self.assertTrue(any("retrieved fact" in call for call in print_calls))
 
+    def test_vertex_validate_warns_invalid_dimension(self):
+        """Invalid GOOGLE_VERTEX_EMBEDDING_DIMENSION triggers warning and falls back to 1408."""
+        env_overrides = {
+            "MULTIMODAL_PROVIDER": "vertex",
+            "GOOGLE_VERTEX_EMBEDDING_DIMENSION": "999",  # not in {128, 256, 512, 1408}
+        }
+        cfg = _cfg("vertex")
+        cfg.google_vertex_embedding_dimension = 999  # simulate invalid parsed value
+
+        with mock.patch("builtins.print") as mock_print:
+            mm.VertexProvider(cfg).validate()
+
+        print_calls = [str(args[0]) for args, _ in mock_print.call_args_list if args]
+        self.assertTrue(
+            any("[vertex] WARNING" in call for call in print_calls),
+            f"Expected [vertex] WARNING in print output, got: {print_calls}",
+        )
+        self.assertEqual(
+            cfg.google_vertex_embedding_dimension,
+            1408,
+            "validate() should fall back to 1408d on invalid dimension",
+        )
+
+    def test_vertex_validate_accepts_all_valid_dims(self):
+        """128, 256, 512, 1408 are all accepted without printing any warning."""
+        cfg = _cfg("vertex")
+        valid_dims = [128, 256, 512, 1408]
+        for dim in valid_dims:
+            cfg.google_vertex_embedding_dimension = dim
+            with mock.patch("builtins.print") as mock_print:
+                mm.VertexProvider(cfg).validate()
+            print_calls = [
+                str(args[0]) for args, _ in mock_print.call_args_list if args
+            ]
+            self.assertFalse(
+                any("[vertex] WARNING" in call for call in print_calls),
+                f"Unexpected warning for valid dim={dim}: {print_calls}",
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
