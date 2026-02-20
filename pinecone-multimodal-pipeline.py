@@ -826,6 +826,9 @@ class OpenAIClipProvider(BaseProvider):
         ]
 
 
+_VERTEX_ALLOWED_DIMS = {128, 256, 512, 1408}
+
+
 class VertexProvider(BaseProvider):
     _MAX_TEXT_CHARS = 1000
 
@@ -842,6 +845,14 @@ class VertexProvider(BaseProvider):
             raise ValueError(
                 "PINECONE_INDEX_VERTEX_1408 (or PINECONE_INDEX) is required for vertex provider"
             )
+        dim = self.config.google_vertex_embedding_dimension
+        if dim not in _VERTEX_ALLOWED_DIMS:
+            print(
+                f"[vertex] WARNING: GOOGLE_VERTEX_EMBEDDING_DIMENSION={dim} is not a valid "
+                f"Vertex multimodalembedding@001 dimension. Valid values: {sorted(_VERTEX_ALLOWED_DIMS)}. "
+                "Falling back to 1408d. Pinecone preflight will enforce the expected dim."
+            )
+            self.config.google_vertex_embedding_dimension = 1408
 
     def text_index(self) -> str:
         return self.config.pinecone_index_vertex_1408
