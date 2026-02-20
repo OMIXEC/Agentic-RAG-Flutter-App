@@ -540,9 +540,9 @@ class PipelineConfig:
                 "AWS_NOVA_EMBEDDING_MODEL", "amazon.nova-2-multimodal-embeddings-v1:0"
             ),
             aws_nova_embedding_dimension=int(
-                _env("AWS_NOVA_EMBEDDING_DIMENSION", "1024")
+                _env("AWS_NOVA_EMBEDDING_DIMENSION", "3072")
             ),
-            aws_nova_expected_dim=int(_env("AWS_NOVA_EXPECTED_DIMENSION", "1024")),
+            aws_nova_expected_dim=int(_env("AWS_NOVA_EXPECTED_DIMENSION", "3072")),
             aws_nova_video_max_bytes=int(
                 _env("AWS_NOVA_VIDEO_MAX_BYTES", str(20 * 1024 * 1024))
             ),
@@ -1162,7 +1162,7 @@ class AwsNovaProvider(BaseProvider):
             print(
                 f"[nova] WARNING: AWS_NOVA_EMBEDDING_DIMENSION={self.config.aws_nova_embedding_dimension} "
                 f"!= AWS_NOVA_EXPECTED_DIMENSION={self.config.aws_nova_expected_dim}. "
-                "Both values should be 1024 for amazon.nova-2-multimodal-embeddings-v1. "
+                "Both values should be 3072 for amazon.nova-2-multimodal-embeddings-v1 (native max). "
                 "Pinecone preflight will enforce the expected dim and may reject upserts."
             )
 
