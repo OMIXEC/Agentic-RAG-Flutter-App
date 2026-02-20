@@ -6,11 +6,11 @@
 ## Current Position
 
 **Phase:** 02-aws-nova-integration (in progress)
-**Plan:** 1 of 3 in current phase
+**Plan:** 2 of 3 in current phase
 **Status:** In progress
-**Last activity:** 2026-02-20 - Completed 02-01-PLAN.md
+**Last activity:** 2026-02-20 - Completed 02-02-PLAN.md
 
-Progress: ████░░░░░░ 40% (4/10 estimated plans)
+Progress: █████░░░░░ 50% (5/10 estimated plans)
 
 ## Tech Stack
 
@@ -37,6 +37,8 @@ Progress: ████░░░░░░ 40% (4/10 estimated plans)
 6. **CLIP model auto-detection** - `_resolve_clip_expected_dim()` maps model name to dimension; OPENAI_CLIP_EMBEDDING_DIMENSION can override
 7. **Nova video size guard returns [] not raises** - Oversized files (>20MB) skip embed cleanly; raising would crash the entire ingestion run
 8. **AWS_NOVA_VIDEO_MAX_BYTES default = 20MB** - Base64 encoding adds ~33% overhead; 20MB raw → ~26.7MB encoded is near Bedrock's 25MB limit; margin prevents payload rejection
+9. **Mock Path.stat at class level in tests** - PosixPath instance attributes are read-only; use `mock.patch.object(Path, 'stat', ...)` not instance-level patching
+10. **Audio fallback tests need >80 char transcripts** - chunk_min_chars=80 silently drops short strings; tests must use long enough transcript to produce chunks
 
 ## Active Concerns
 
@@ -46,8 +48,8 @@ Progress: ████░░░░░░ 40% (4/10 estimated plans)
 
 ## Session Continuity
 
-**Last session:** 2026-02-20 04:13 UTC
-**Stopped at:** Completed 02-01-PLAN.md
+**Last session:** 2026-02-20 04:15 UTC
+**Stopped at:** Completed 02-02-PLAN.md
 **Resume file:** None
 
 ## File Ownership Map
@@ -57,3 +59,4 @@ Progress: ████░░░░░░ 40% (4/10 estimated plans)
 | pinecone-multimodal-pipeline.py | Main pipeline with `_chunk_text()`, providers |
 | backend/config.py | FastAPI settings dataclass |
 | .env_sample | Environment variable template |
+| tests/test_multimodal_pipeline.py | 22 tests covering all providers and Nova multimodal paths |
