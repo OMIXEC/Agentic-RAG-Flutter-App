@@ -531,6 +531,53 @@ class MultimodalPipelineTests(unittest.TestCase):
         print_calls = [args[0] for args, _ in print_mock.call_args_list if args]
         self.assertTrue(any("retrieved fact" in call for call in print_calls))
 
+    def test_aws_nova_validate_warns_on_dimension_mismatch(self):
+        """Mismatched AWS_NOVA_EMBEDDING_DIMENSION vs AWS_NOVA_EXPECTED_DIMENSION triggers warning."""
+        cfg = _cfg("aws_nova")
+        # Deliberately set a mismatch
+        cfg.aws_nova_embedding_dimension = 1024
+        cfg.aws_nova_expected_dim = 3072
+
+        with mock.patch("boto3.client", return_value=mock.Mock()):
+            provider = mm.AwsNovaProvider(cfg)
+
+        with mock.patch("builtins.print") as mock_print:
+            provider.validate()
+
+        print_calls = [str(args[0]) for args, _ in mock_print.call_args_list if args]
+        self.assertTrue(
+            any("[nova] WARNING" in call for call in print_calls),
+            f"Expected [nova] WARNING in print output, got: {print_calls}",
+        )
+
+    def test_aws_nova_defaults_to_3072d(self):
+        """PipelineConfig.from_env() defaults Nova embedding dimension to 3072 when env vars are absent."""
+        # Use a minimal env — do NOT set AWS_NOVA_EMBEDDING_DIMENSION or AWS_NOVA_EXPECTED_DIMENSION
+        env = {
+            "MULTIMODAL_PROVIDER": "aws_nova",
+            "PINECONE_API_KEY": "pc",
+            "PINECONE_INDEX": "idx-generic",
+            "PINECONE_INDEX_AWS_NOVA_1024": "idx-aws",
+            "PINECONE_NAMESPACE": "ns-test",
+        }
+        # Temporarily clear any existing Nova dim env vars so defaults apply
+        clear_keys = ["AWS_NOVA_EMBEDDING_DIMENSION", "AWS_NOVA_EXPECTED_DIMENSION"]
+        with mock.patch.dict(os.environ, env, clear=False):
+            for key in clear_keys:
+                os.environ.pop(key, None)
+            cfg = mm.PipelineConfig.from_env()
+
+        self.assertEqual(
+            cfg.aws_nova_embedding_dimension,
+            3072,
+            f"Expected default 3072, got {cfg.aws_nova_embedding_dimension}",
+        )
+        self.assertEqual(
+            cfg.aws_nova_expected_dim,
+            3072,
+            f"Expected default 3072, got {cfg.aws_nova_expected_dim}",
+        )
+
     def test_vertex_validate_warns_invalid_dimension(self):
         """Invalid GOOGLE_VERTEX_EMBEDDING_DIMENSION triggers warning and falls back to 1408."""
         env_overrides = {
