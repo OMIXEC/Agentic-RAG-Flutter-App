@@ -51,8 +51,25 @@ Plans:
 ---
 
 ## Phase 3: Vertex AI Enhancement
-**Goal:** Complete GCP ecosystem support
-**Status:** Not Started
+**Goal:** Add Vertex AI dimension validation, correct Nova defaults to 3072d, and fully document Vertex env vars — completing first-class GCP provider support
+**Status:** In Progress
+**Plans:** 2 plans in 2 waves
+
+### Scope
+- Vertex dimension validation in `VertexProvider.validate()` — warn + fallback to 1408d for invalid dims
+- Nova default dimension corrected from 1024d → 3072d (AWS documented native maximum)
+- `.env_sample` Vertex section fully documented with all 8 env vars and comments
+- 4 new tests covering Vertex validation and Nova correction (22 → 26 tests)
+
+### Success Criteria
+- [ ] `VertexProvider.validate()` warns and falls back for dims not in {128, 256, 512, 1408}
+- [ ] `PipelineConfig.from_env()` Nova defaults are 3072d
+- [ ] `.env_sample` has all Vertex env vars with inline comments
+- [ ] All 26 tests pass
+
+Plans:
+- [ ] 03-01-PLAN.md — Vertex validate() + Nova defaults + .env_sample documentation
+- [ ] 03-02-PLAN.md — Test coverage for Vertex validation and Nova 3072d correction
 
 ---
 
