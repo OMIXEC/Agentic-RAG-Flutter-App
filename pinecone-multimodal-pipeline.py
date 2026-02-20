@@ -608,6 +608,29 @@ class OpenAIClipProvider(BaseProvider):
                 "must be different indexes."
             )
 
+        # Validate CLIP dimension matches expected index dimension
+        expected_clip_dim = self.config.openai_clip_expected_dim
+        # This will be validated during preflight, but early warning is helpful
+        clip_model = self.config.clip_model_name.lower()
+        if "vit-l-14" in clip_model and expected_clip_dim != 768:
+            print(
+                f"Warning: CLIP model {self.config.clip_model_name} produces 768d vectors, "
+                f"but OPENAI_CLIP_EMBEDDING_DIMENSION is {expected_clip_dim}. "
+                f"Ensure Pinecone index dimension matches."
+            )
+        elif "vit-h-14" in clip_model and expected_clip_dim != 1024:
+            print(
+                f"Warning: CLIP model {self.config.clip_model_name} produces 1024d vectors, "
+                f"but OPENAI_CLIP_EMBEDDING_DIMENSION is {expected_clip_dim}. "
+                f"Ensure Pinecone index dimension matches."
+            )
+        elif "vit-bigg-14" in clip_model and expected_clip_dim != 1280:
+            print(
+                f"Warning: CLIP model {self.config.clip_model_name} produces 1280d vectors, "
+                f"but OPENAI_CLIP_EMBEDDING_DIMENSION is {expected_clip_dim}. "
+                f"Ensure Pinecone index dimension matches."
+            )
+
     def text_index(self) -> str:
         return self.config.pinecone_text_index
 
@@ -618,7 +641,18 @@ class OpenAIClipProvider(BaseProvider):
         if self._clip is None:
             from sentence_transformers import SentenceTransformer
 
-            self._clip = SentenceTransformer(self.config.clip_model_name)
+            model_name = self.config.clip_model_name
+            print(f"Loading CLIP model: {model_name}")
+            self._clip = SentenceTransformer(model_name)
+            # Verify dimension matches expected
+            test_embedding = self._clip.encode(["test"], normalize_embeddings=True)[0]
+            actual_dim = len(test_embedding)
+            if actual_dim != self.config.openai_clip_expected_dim:
+                print(
+                    f"Warning: CLIP model {model_name} produces {actual_dim}d vectors, "
+                    f"but config expects {self.config.openai_clip_expected_dim}d. "
+                    f"Update OPENAI_CLIP_EMBEDDING_DIMENSION or use matching Pinecone index."
+                )
         return self._clip
 
     def _embed_text_openai(self, text: str) -> list[float]:
