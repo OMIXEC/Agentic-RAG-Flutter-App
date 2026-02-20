@@ -5,12 +5,12 @@
 
 ## Current Position
 
-**Phase:** 02-aws-nova-integration (complete)
-**Plan:** 3 of 3 in current phase
-**Status:** Phase complete
-**Last activity:** 2026-02-20 - Completed 02-03-PLAN.md
+**Phase:** 03-vertex-ai-enhancement (in progress)
+**Plan:** 1 of 2 in current phase
+**Status:** In progress
+**Last activity:** 2026-02-20 - Completed 03-01-PLAN.md
 
-Progress: ██████░░░░ 60% (6/10 estimated plans)
+Progress: ███████░░░ 70% (7/10 estimated plans)
 
 ## Tech Stack
 
@@ -41,6 +41,10 @@ Progress: ██████░░░░ 60% (6/10 estimated plans)
 10. **Audio fallback tests need >80 char transcripts** - chunk_min_chars=80 silently drops short strings; tests must use long enough transcript to produce chunks
 11. **Nova dimension validation uses print() not raise** - Matches CLIP pattern; Pinecone preflight is the hard enforcement; users can proceed if they know what they're doing
 12. **AWS_NOVA_EMBEDDING_DIMENSION was undocumented** - Pipeline already read it (line 542-543) but .env_sample didn't list it; added in 02-03
+13. **Vertex dimension validation uses print() + fallback to 1408d** - Consistent with CLIP/Nova pattern; invalid GOOGLE_VERTEX_EMBEDDING_DIMENSION auto-corrects to 1408d (max quality); Pinecone preflight handles hard enforcement
+14. **Nova defaults corrected to 3072d** - 3072d is the AWS-documented native maximum for amazon.nova-2-multimodal-embeddings-v1; prior 1024d default was a placeholder
+15. **pinecone_index_aws_nova_1024 attribute name preserved** - Renaming Python attribute would break existing tests and configs; field name left as-is even after Nova default correction to 3072d
+16. **PINECONE_INDEX_VERTEX_1408 locked name** - .env_sample uses 'multimodal-embedding-vertex-1408d' as the locked naming convention for Vertex indexes
 
 ## Active Concerns
 
@@ -50,15 +54,15 @@ Progress: ██████░░░░ 60% (6/10 estimated plans)
 
 ## Session Continuity
 
-**Last session:** 2026-02-20 04:20 UTC
-**Stopped at:** Completed 02-03-PLAN.md (Phase 02 complete)
+**Last session:** 2026-02-20 14:27 UTC
+**Stopped at:** Completed 03-01-PLAN.md (Vertex dimension validation + Nova defaults)
 **Resume file:** None
 
 ## File Ownership Map
 
 | File | Purpose |
 |------|---------|
-| pinecone-multimodal-pipeline.py | Main pipeline with `_chunk_text()`, providers |
+| pinecone-multimodal-pipeline.py | Main pipeline with `_chunk_text()`, providers, `_VERTEX_ALLOWED_DIMS` |
 | backend/config.py | FastAPI settings dataclass |
-| .env_sample | Environment variable template |
+| .env_sample | Environment variable template (8 Vertex vars documented) |
 | tests/test_multimodal_pipeline.py | 22 tests covering all providers and Nova multimodal paths |
