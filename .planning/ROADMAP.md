@@ -25,13 +25,27 @@ Plans:
 ---
 
 ## Phase 2: AWS Nova Multimodal Deep Integration
-**Goal:** Full Nova multimodal support with native audio/video embeddings
-**Status:** Not Started
+**Goal:** Full Nova multimodal support with native audio/video embeddings, production safety guards, and comprehensive test coverage
+**Status:** Planned
+**Plans:** 3 plans in 2 waves
 
 ### Scope
-- Native audio embeddings
-- Async video processing
-- Unified 1024d embedding space
+- Native audio embeddings with config-aware chunking fallback
+- Video payload size guard (25MB Bedrock limit)
+- Unified 1024d embedding space validation
+- Comprehensive Nova test coverage (17 → 22 tests)
+
+### Success Criteria
+- [ ] Nova audio fallback uses `chunk_text_with_strategy` with config params
+- [ ] Nova video guarded against files > `AWS_NOVA_VIDEO_MAX_BYTES`
+- [ ] All modality paths covered by tests
+- [ ] `validate()` warns on dimension mismatch
+- [ ] All 22 tests pass
+
+Plans:
+- [ ] 02-01-PLAN.md — Audio chunking fix + video size guard
+- [ ] 02-02-PLAN.md — Comprehensive Nova test coverage
+- [ ] 02-03-PLAN.md — Unified 1024d validation + env documentation
 
 ---
 
