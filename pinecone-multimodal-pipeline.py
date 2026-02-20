@@ -401,6 +401,7 @@ class PipelineConfig:
     aws_nova_model_id: str
     aws_nova_embedding_dimension: int
     aws_nova_expected_dim: int
+    aws_nova_video_max_bytes: int  # default 20MB safety margin
 
     # Chunking configuration
     chunk_strategy: str
@@ -542,6 +543,9 @@ class PipelineConfig:
                 _env("AWS_NOVA_EMBEDDING_DIMENSION", "1024")
             ),
             aws_nova_expected_dim=int(_env("AWS_NOVA_EXPECTED_DIMENSION", "1024")),
+            aws_nova_video_max_bytes=int(
+                _env("AWS_NOVA_VIDEO_MAX_BYTES", str(20 * 1024 * 1024))
+            ),
             chunk_strategy=_env("CHUNK_STRATEGY", "paragraph"),
             chunk_max_chars=int(_env("CHUNK_MAX_CHARS", "1200")),
             chunk_min_chars=int(_env("CHUNK_MIN_CHARS", "80")),
@@ -1195,6 +1199,14 @@ class AwsNovaProvider(BaseProvider):
         return self._extract_first_vector(body)
 
     def _embed_video(self, file_path: Path) -> list[float]:
+        file_size = file_path.stat().st_size
+        if file_size > self.config.aws_nova_video_max_bytes:
+            print(
+                f"[nova] Video {file_path.name} ({file_size // (1024 * 1024)}MB) exceeds "
+                f"AWS_NOVA_VIDEO_MAX_BYTES ({self.config.aws_nova_video_max_bytes // (1024 * 1024)}MB). "
+                "Skipping native embed — add video to manifest for metadata-only indexing."
+            )
+            return []
         payload = self._single_embed_payload("search_document")
         ext = file_path.suffix.lower().lstrip(".") or "mp4"
         payload["videos"] = [
