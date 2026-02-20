@@ -5,12 +5,12 @@
 
 ## Current Position
 
-**Phase:** 02-aws-nova-integration (in progress)
-**Plan:** 2 of 3 in current phase
-**Status:** In progress
-**Last activity:** 2026-02-20 - Completed 02-02-PLAN.md
+**Phase:** 02-aws-nova-integration (complete)
+**Plan:** 3 of 3 in current phase
+**Status:** Phase complete
+**Last activity:** 2026-02-20 - Completed 02-03-PLAN.md
 
-Progress: █████░░░░░ 50% (5/10 estimated plans)
+Progress: ██████░░░░ 60% (6/10 estimated plans)
 
 ## Tech Stack
 
@@ -39,6 +39,8 @@ Progress: █████░░░░░ 50% (5/10 estimated plans)
 8. **AWS_NOVA_VIDEO_MAX_BYTES default = 20MB** - Base64 encoding adds ~33% overhead; 20MB raw → ~26.7MB encoded is near Bedrock's 25MB limit; margin prevents payload rejection
 9. **Mock Path.stat at class level in tests** - PosixPath instance attributes are read-only; use `mock.patch.object(Path, 'stat', ...)` not instance-level patching
 10. **Audio fallback tests need >80 char transcripts** - chunk_min_chars=80 silently drops short strings; tests must use long enough transcript to produce chunks
+11. **Nova dimension validation uses print() not raise** - Matches CLIP pattern; Pinecone preflight is the hard enforcement; users can proceed if they know what they're doing
+12. **AWS_NOVA_EMBEDDING_DIMENSION was undocumented** - Pipeline already read it (line 542-543) but .env_sample didn't list it; added in 02-03
 
 ## Active Concerns
 
@@ -48,8 +50,8 @@ Progress: █████░░░░░ 50% (5/10 estimated plans)
 
 ## Session Continuity
 
-**Last session:** 2026-02-20 04:15 UTC
-**Stopped at:** Completed 02-02-PLAN.md
+**Last session:** 2026-02-20 04:20 UTC
+**Stopped at:** Completed 02-03-PLAN.md (Phase 02 complete)
 **Resume file:** None
 
 ## File Ownership Map
