@@ -7,13 +7,13 @@
 **/ENV/
 **/.venv/
 .Python
-build/
+**/build/
 develop-eggs/
 dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# lib/  <-- REMOVED to avoid ignoring Flutter app/lib
 lib64/
 parts/
 sdist/
@@ -30,6 +30,7 @@ MANIFEST
 **/.env
 env.bak
 env.resource
+
 
 # OS files
 .DS_Store
