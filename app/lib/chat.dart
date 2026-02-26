@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'backend_api.dart';
 import 'chat_message.dart';
-import 'openai.dart';
-import 'pinecone.dart';
+import 'memory_store.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.title});
@@ -14,78 +13,177 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
+class _UiMessage {
+  final String text;
+  final bool isAssistant;
+  final String? imageUrl;
+
+  const _UiMessage({
+    required this.text,
+    required this.isAssistant,
+    this.imageUrl,
+  });
+}
+
 class _ChatPageState extends State<ChatPage> {
-  final TextEditingController _controller = TextEditingController();
-  final OpenAIService _aiService = OpenAIService();
-  final PineconeService _pineconeService = PineconeService();
-  final List<String> _conversation = <String>[];
+  final TextEditingController _messageController = TextEditingController();
+  final TextEditingController _imageUrlController = TextEditingController();
+  final BackendApiService _apiService = BackendApiService();
+  final MemoryStore _memoryStore = MemoryStore();
+  final List<_UiMessage> _conversation = <_UiMessage>[];
+
   bool _loading = false;
+  bool _memoryReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initMemory();
+  }
+
+  Future<void> _initMemory() async {
+    await _memoryStore.load();
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _memoryReady = true;
+    });
+  }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _messageController.dispose();
+    _imageUrlController.dispose();
     super.dispose();
   }
 
-  Future<void> _fetchData(String query) async {
-    final embedding = await _aiService.generateEmbeddings(query);
-    if (embedding.isEmpty) {
-      _appendAssistant(
-        'Embedding failed. Set GOOGLE_VERTEX_ACCESS_TOKEN and GOOGLE_CLOUD_PROJECT in flutter_frontend/.env.',
-      );
-      return;
+  Future<void> _fetchData(String query, {String? imageUrl}) async {
+    try {
+      final result = await _apiService.chatMemory(message: query, topK: 8);
+      final citationText = result.citations.isEmpty
+          ? ''
+          : '\n\nCitations:\n${result.citations.map((c) => '- ${c.title} (${c.sourceUri})').join('\n')}';
+      final composed = '${result.answer}$citationText';
+      _appendAssistant(composed);
+      _memoryStore.ingestAssistantMessage(composed);
+      await _memoryStore.save();
+    } catch (error) {
+      _appendAssistant('Backend chat error: $error');
     }
-
-    final pineconeResult = await _pineconeService.queryIndex(
-      dotenv.env['PINECONE_INDEX'] ?? '',
-      embedding,
-      topK: 3,
-    );
-
-    if (pineconeResult['error'] != null) {
-      _appendAssistant('Pinecone error: ${pineconeResult['error']}');
-      return;
-    }
-
-    final matches = (pineconeResult['matches'] as List<dynamic>? ?? const []);
-    final context = matches
-        .map((match) => match['metadata']?['text'] as String? ?? '')
-        .where((text) => text.isNotEmpty)
-        .join('\n\n');
-
-    final llmResponse = await _aiService.generateLLMResponse(query, context);
-    _appendAssistant(llmResponse);
   }
 
   void _appendAssistant(String text) {
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
-      if (_conversation.isNotEmpty && _conversation.last == 'Loading...') {
+      if (_conversation.isNotEmpty && _conversation.last.text == 'Loading...') {
         _conversation.removeLast();
       }
-      _conversation.add(text);
+      _conversation.add(_UiMessage(text: text, isAssistant: true));
       _loading = false;
     });
   }
 
-  void _onSubmit() {
-    final text = _controller.text.trim();
+  Future<void> _onSubmit() async {
+    final text = _messageController.text.trim();
+    final imageUrl = _imageUrlController.text.trim();
+
     if (text.isEmpty || _loading) {
       return;
     }
 
     setState(() {
-      _conversation.add(text);
-      _conversation.add('Loading...');
+      _conversation.add(
+        _UiMessage(
+          text: text,
+          isAssistant: false,
+          imageUrl: imageUrl.isEmpty ? null : imageUrl,
+        ),
+      );
+      _conversation.add(const _UiMessage(text: 'Loading...', isAssistant: true));
       _loading = true;
     });
-    _controller.clear();
-    _fetchData(text);
+
+    _messageController.clear();
+    _imageUrlController.clear();
+
+    _memoryStore.ingestUserMessage(text);
+    await _memoryStore.save();
+
+    await _fetchData(text, imageUrl: imageUrl.isEmpty ? null : imageUrl);
+  }
+
+  Future<void> _openMemorySheet() async {
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        final items = _memoryStore.items;
+
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Human Mind Memory',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        await _memoryStore.clear();
+                        if (!mounted) {
+                          return;
+                        }
+                        setState(() {});
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Clear'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                if (items.isEmpty)
+                  const Text('No memory captured yet.')
+                else
+                  Flexible(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: items.length,
+                      itemBuilder: (_, index) {
+                        final item = items[index];
+                        return ListTile(
+                          dense: true,
+                          title: Text('${item.type.name}: ${item.key}'),
+                          subtitle: Text(item.value),
+                          trailing: Text('x${item.mentions}'),
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildInputBar() {
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
@@ -98,23 +196,36 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ],
       ),
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            child: TextField(
-              controller: _controller,
-              onSubmitted: (_) => _onSubmit(),
-              maxLines: null,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Ask about your indexed docs...',
-              ),
+          TextField(
+            controller: _messageController,
+            onSubmitted: (_) => _onSubmit(),
+            maxLines: null,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Ask about your docs, tasks, goals, or preferences...',
             ),
           ),
-          IconButton(
-            onPressed: _loading ? null : _onSubmit,
-            icon: const Icon(Icons.send_rounded),
-            color: const Color(0xFF1565C0),
+          const Divider(height: 10),
+          TextField(
+            controller: _imageUrlController,
+            maxLines: 1,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Image URL (optional for multimodal chat)',
+              prefixIcon: Icon(Icons.image_outlined),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton.icon(
+                onPressed: _loading ? null : _onSubmit,
+                icon: const Icon(Icons.send_rounded),
+                label: const Text('Send'),
+              ),
+            ],
           ),
         ],
       ),
@@ -129,23 +240,36 @@ class _ChatPageState extends State<ChatPage> {
         centerTitle: true,
         backgroundColor: Colors.white,
         foregroundColor: const Color(0xFF0B3E75),
+        actions: [
+          IconButton(
+            tooltip: 'Memory',
+            onPressed: _openMemorySheet,
+            icon: const Icon(Icons.psychology_alt_outlined),
+          ),
+        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFE3F2FD), Color(0xFFFFFFFF), Color(0xFFEAF3FF)],
+            colors: [
+              Color(0xFFE3F2FD),
+              Color(0xFFFFFFFF),
+              Color(0xFFEAF3FF),
+            ],
           ),
         ),
         child: Column(
           children: [
             if (_conversation.isEmpty)
-              const Padding(
-                padding: EdgeInsets.fromLTRB(24, 32, 24, 12),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 28, 24, 12),
                 child: Text(
-                  'Ask anything about your indexed documents.',
-                  style: TextStyle(
+                  _memoryReady
+                      ? 'Multimodal RAG + Human Memory is ready.'
+                      : 'Loading memory...',
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     color: Color(0xFF0B3E75),
@@ -157,10 +281,14 @@ class _ChatPageState extends State<ChatPage> {
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 8, bottom: 8),
                 itemCount: _conversation.length,
-                itemBuilder: (context, index) => ChatMessage(
-                  _conversation[index],
-                  index.isOdd,
-                ),
+                itemBuilder: (_, index) {
+                  final msg = _conversation[index];
+                  return ChatMessage(
+                    msg.text,
+                    msg.isAssistant,
+                    imageUrl: msg.imageUrl,
+                  );
+                },
               ),
             ),
             _buildInputBar(),

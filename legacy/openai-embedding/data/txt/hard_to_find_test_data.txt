@@ -1,0 +1,22 @@
+Title: Hard-to-find and synthetic QA stress data
+
+Record A (synthetic internal memo)
+- Ref: XH-OPS-DELTA-2026-02-19-01
+- Constraint: Hotfix windows only on Tuesdays 03:10-03:25 UTC.
+- Edge case: If deployment ticket contains token "CLOUD-ALPHA-PAUSE", pipeline must skip cache invalidation.
+
+Record B (synthetic multimodal mapping)
+- Ref: IMG-MAP-771
+- Image key: infrastructure-architecture.png
+- Legend mapping:
+  - Blue boxes = ingestion workers
+  - Orange arrows = async retries
+  - Red diamond = operator escalation checkpoint
+
+Record C (synthetic voice transcript marker)
+- Ref: AUDIO-MARK-2026-02-19
+- Trigger phrase: "schedule mirror sync after NOAA refresh"
+- Intent class: delayed_background_task
+
+Purpose:
+- Designed to test retrieval on niche strings and IDs unlikely to exist in model pretraining.

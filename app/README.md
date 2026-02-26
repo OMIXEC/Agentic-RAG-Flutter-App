@@ -1,6 +1,10 @@
-# Flutter Frontend (v2)
+# App (Flutter) - RAG Human Mind v2.1
 
-This app queries Pinecone with Google Vertex `multimodalembedding@001` vectors and renders responses from Gemini.
+This Flutter app supports:
+- Retrieval chat via backend API (`/v1/memories/chat`)
+- Personal memory capture and recall
+- Multimodal chat by adding an optional image URL
+- Provider fallback for modern model stacks
 
 ## Run
 ```bash
@@ -10,19 +14,8 @@ flutter run
 
 ## Required `.env` keys
 ```env
-PINECONE_API_KEY=
-PINECONE_INDEX=
-PINECONE_BASE_URL=
-GOOGLE_API_KEY=
-GEMINI_MODEL=gemini-2.5-flash
-GOOGLE_CLOUD_PROJECT=
-GOOGLE_CLOUD_LOCATION=us-central1
-GOOGLE_VERTEX_MODEL=multimodalembedding@001
-GOOGLE_VERTEX_EMBEDDING_DIMENSION=1408
-GOOGLE_VERTEX_ACCESS_TOKEN=
+BACKEND_API_BASE_URL=http://localhost:8000
+BACKEND_AUTH_TOKEN=
 ```
 
-For local demos, generate token with:
-```bash
-gcloud auth print-access-token
-```
+`BACKEND_AUTH_TOKEN` must be a valid JWT accepted by backend (`JWT_SECRET`, `JWT_AUDIENCE`, `JWT_ISSUER`).

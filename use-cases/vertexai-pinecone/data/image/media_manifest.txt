@@ -1,0 +1,5 @@
+# file_name|description|source_url
+infrastructure-architecture.png|System architecture diagram for ingestion and retrieval testing|
+shirt.png|Sample product-style image for visual retrieval testing|
+image-sa32.jpg|General sample image for multimodal indexing|
+news-random-1.jpg|Placeholder for downloaded random news image (download blocked in sandbox)|https://picsum.photos/

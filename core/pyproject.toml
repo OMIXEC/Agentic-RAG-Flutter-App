@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pinecone-rag"
+version = "1.0.0"
+description = "Shared multi-cloud RAG library — Pinecone + OpenAI / Vertex AI / AWS Bedrock / Azure OpenAI"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+dependencies = [
+    "pinecone>=5.4.0",
+    "python-dotenv>=1.0.0",
+    "numpy>=1.26.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.7.0",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.60.0", "sentence-transformers>=3.4.0", "Pillow>=11.0.0"]
+vertex = ["google-auth>=2.38.0", "requests>=2.32.0", "opencv-python>=4.10.0", "Pillow>=11.0.0"]
+aws = ["boto3>=1.36.0", "Pillow>=11.0.0"]
+azure = ["openai>=1.60.0"]
+docs = ["pypdf>=5.4.0", "python-docx>=1.1.0"]
+all = ["pinecone-rag[openai,vertex,aws,azure,docs]"]
+dev = ["pytest>=8.3.0", "ruff>=0.4.0"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pinecone_rag*"]

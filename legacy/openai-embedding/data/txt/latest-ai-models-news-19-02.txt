@@ -1,0 +1,380 @@
+{
+  "title": "2026 Complete AI Model Intelligence Report",
+  "date": "2026-02-19",
+  "total_tracked_releases": "252+ models across 24+ organizations",
+
+  "leaderboard_top5_general_purpose": [
+    { "rank": 1, "model": "Gemini 3 Pro", "org": "Google", "score_basis": "ECI (39-benchmark aggregate)" },
+    { "rank": 2, "model": "GPT-5.2",      "org": "OpenAI", "score_basis": "ECI" },
+    { "rank": 3, "model": "Claude Opus 4.5", "org": "Anthropic", "score_basis": "ECI" },
+    { "rank": 4, "model": "Grok 4",       "org": "xAI",     "score_basis": "ECI" },
+    { "rank": 5, "model": "Qwen3-Max",    "org": "Alibaba",  "score_basis": "ECI — top open-source" }
+  ],
+
+  "released_models_2026": {
+
+    "January_2026": [
+      {
+        "model": "GLM-4.7-Flash",
+        "org": "Zhipu AI",
+        "release_date": "2026-01-19",
+        "type": "Open Source",
+        "tier": "Fast / Lightweight",
+        "gpqa_score": 0.81,
+        "highlights": "Fast inference variant of the GLM-4 family. Ideal for low-latency production deployments.",
+        "relevance": "Good fit for real-time agent pipelines where speed > raw intelligence."
+      },
+      {
+        "model": "Kimi K2.5",
+        "org": "Moonshot AI",
+        "release_date": "2026-01-27",
+        "type": "Open Source",
+        "tier": "Frontier",
+        "gpqa_score": 0.9,
+        "context_window": "128K",
+        "highlights": "Successor to Kimi K2 Thinking. Top-10 in QA, reasoning, intelligence, math, and agentic benchmarks. 397,536 HuggingFace downloads in first two weeks.",
+        "relevance": "Excellent open-weight agent model. Test against Qwen3-Max for your RAG stack."
+      }
+    ],
+
+    "February_2026": [
+      {
+        "model": "Step-3.5-Flash",
+        "org": "StepFun",
+        "release_date": "2026-02-02",
+        "type": "Open Source",
+        "tier": "Fast",
+        "highlights": "Optimized for low-latency inference in Chinese and English. Part of StepFun's growing open-source ecosystem.",
+        "relevance": "Benchmark candidate for multilingual fast-inference tasks."
+      },
+      {
+        "model": "Claude Opus 4.6",
+        "org": "Anthropic",
+        "release_date": "2026-02-05",
+        "type": "Proprietary",
+        "tier": "Frontier",
+        "gpqa_score": 0.9,
+        "context_window": "1M tokens (beta)",
+        "output_capacity": "128K tokens",
+        "highlights": [
+          "1 million token context window in beta",
+          "Adaptive thinking with effort controls",
+          "Agent Teams: native multi-agent orchestration in API",
+          "Currently ranked #1 on LogRocket AI dev tool power rankings"
+        ]
+      },
+      {
+        "model": "GPT-5.3 Codex",
+        "org": "OpenAI",
+        "release_date": "2026-02-05",
+        "type": "Proprietary",
+        "tier": "Coding Specialist",
+        "highlights": [
+          "Coding-specialized variant of the GPT-5.x line",
+          "Available via VS Code AI Toolkit v0.30.0 (OpenAI Response API)",
+          "Optimized for code generation, debugging, and terminal-based agentic tasks"
+        ],
+        "relevance": "Benchmark against AlphaCode 3 and Claude Code for your SaaS cert platform backend generation."
+      },
+      {
+        "model": "LongCat-Flash-Lite",
+        "org": "Meituan",
+        "release_date": "2026-02-05",
+        "type": "Open Source",
+        "tier": "Fast / Lightweight",
+        "gpqa_score": 0.7,
+        "highlights": "Ultra-fast, lightweight model from Chinese e-commerce giant Meituan. Designed for high-throughput service environments.",
+        "relevance": "Interesting for edge inference experiments — watch latency benchmarks."
+      },
+      {
+        "model": "GLM-5",
+        "org": "Zhipu AI",
+        "release_date": "2026-02-11",
+        "type": "Open Source",
+        "tier": "Frontier",
+        "context_window": "203K tokens",
+        "highlights": [
+          "#1 open-source model on February 2026 leaderboard",
+          "203K context window",
+          "Top Quality scores in coding, reasoning, and multilingual tasks",
+          "Released under open license — fully downloadable"
+        ],
+        "relevance": "Strong local inference candidate for smart glasses app — especially multilingual (Hebrew + English) tasks."
+      },
+      {
+        "model": "MiniMax M2.5",
+        "org": "MiniMax",
+        "release_date": "2026-02-12",
+        "type": "Open Source",
+        "tier": "Lightweight",
+        "highlights": "Efficient mid-tier open model optimized for mobile and embedded deployment scenarios. MiniMax continues rapid iteration.",
+        "relevance": "Explore for on-device inference on smart glasses hardware."
+      },
+      {
+        "model": "Seed 2.0 Lite",
+        "org": "ByteDance",
+        "release_date": "2026-02-14",
+        "type": "Proprietary",
+        "tier": "Lightweight",
+        "gpqa_score": 0.9,
+        "highlights": "Lite version of ByteDance's Seed 2.0. High GPQA score at a compact model size — exceptional efficiency ratio.",
+        "relevance": "Pair with Seedance 2.0 video model for multimodal accessibility features in your wearable app."
+      },
+      {
+        "model": "Seed 2.0 Pro",
+        "org": "ByteDance",
+        "release_date": "2026-02-14",
+        "type": "Proprietary",
+        "tier": "Frontier",
+        "gpqa_score": 0.9,
+        "highlights": [
+          "Flagship of ByteDance's Seed 2.0 generation",
+          "Companion to Seedance 2.0 video generation model",
+          "Strong multilingual performance, multimodal understanding"
+        ],
+        "relevance": "Key competitor to GPT-5.3 for vision+language tasks in your accessibility pipeline."
+      },
+      {
+        "model": "Qwen3.5-397B-A17B",
+        "org": "Alibaba / Qwen Team",
+        "release_date": "2026-02-16",
+        "type": "Open Source",
+        "gpqa_score": 0.9,
+        "architecture": "Mixture-of-Experts (MoE) — 397B total params, 17B active",
+        "highlights": [
+          "Sparse MoE architecture: 397B params with only 17B active per forward pass",
+          "Designed for agentic era: multi-step task execution, tool calling, autonomous pipelines",
+          "Top-ranked open-source model for agentic tasks as of Feb 2026"
+        ],
+        "relevance": "Strongest open-source model for your RAG + tool-calling SaaS cert platform. Cost-efficient at inference time due to MoE."
+      },
+      {
+        "model": "Claude Sonnet 4.6",
+        "org": "Anthropic",
+        "release_date": "2026-02-17",
+        "type": "Proprietary",
+        "tier": "Mid-tier / Production",
+        "gpqa_score": 0.9,
+        "highlights": [
+          "Mid-tier Claude optimized for production workloads",
+          "Better price-performance than Opus 4.6",
+          "Supports Agent Teams from Claude Opus 4.6 API interface"
+        ],
+        "relevance": "Best Claude model for your production API calls — use Opus 4.6 for complex reasoning, Sonnet 4.6 for everything else."
+      }
+    ],
+
+    "End_2025_to_Jan_2026_Frontier": [
+      {
+        "model": "Gemini 3 Pro",
+        "org": "Google DeepMind",
+        "type": "Proprietary",
+        "tier": "Frontier — #1 Overall",
+        "context_window": "1M+ tokens",
+        "highlights": [
+          "Ranked #1 across ECI, Artificial Analysis Intelligence Index, Coding Index, and Agentic Index",
+          "Best multimodal model (text, image, video, audio natively)",
+          "Best for Google ecosystem (GCP, Vertex AI, BigQuery)"
+        ],
+        "relevance": "Your GCP/Vertex AI projects should default to Gemini 3 Pro — native integration with no latency overhead."
+      },
+      {
+        "model": "GPT-5.2",
+        "org": "OpenAI",
+        "type": "Proprietary",
+        "tier": "Frontier — #2 Overall",
+        "latency_first_500_tokens": "6 sec",
+        "highlights": [
+          "Auto-switches between Instant mode (simple queries) and Thinking mode (multi-step)",
+          "Best generalist model — #2 on all major benchmarks",
+          "Available in VS Code AI Toolkit via OpenAI Response API"
+        ],
+        "relevance": "Top generalist for your SaaS cert platform — Thinking mode handles complex multi-domain exam questions."
+      },
+      {
+        "model": "Grok 4",
+        "org": "xAI (Elon Musk)",
+        "type": "Proprietary",
+        "context_window": "2M tokens",
+        "highlights": [
+          "Largest context window in production: 2 million tokens",
+          "Real-time X/Twitter data access",
+          "Grok 4.1 variant available at 2M context"
+        ],
+        "relevance": "2M context window is useful for ingesting entire codebases in one shot for your accessibility app."
+      },
+      {
+        "model": "DeepSeek V3.2",
+        "org": "DeepSeek",
+        "type": "Open Source",
+        "highlights": [
+          "Top-10 in QA, reasoning, intelligence, math benchmarks",
+          "Strong coding performance",
+          "High latency (68 sec to first 500 tokens) — not yet optimized"
+        ],
+        "relevance": "Best open-source reasoning model for offline/batch tasks. Not suitable for real-time agent workflows yet."
+      },
+      {
+        "model": "Llama 4 Maverick",
+        "org": "Meta",
+        "type": "Open Source",
+        "context_window": "1M tokens",
+        "latency_first_500_tokens": "4.3 sec",
+        "highlights": [
+          "Fastest frontier-class model: 4.3 sec to first 500 tokens",
+          "1 million token context window",
+          "Fully open weights — commercial use allowed"
+        ],
+        "relevance": "Best open-source model for real-time interactive agents — combine with LiveKit for sub-5s response latency."
+      }
+    ]
+  },
+
+  "upcoming_in_development": {
+
+    "OpenAI": [
+      {
+        "model": "GPT-5.4",
+        "status": "In development — expected Q2 2026",
+        "expected_features": [
+          "Extended multimodal reasoning",
+          "Improved long-form code generation",
+          "Deeper Codex integration"
+        ]
+      },
+      {
+        "model": "GPT-6",
+        "status": "In development — expected H2 2026 or early 2027",
+        "expected_features": [
+          "Near human-level general intelligence",
+          "Full persistent memory system",
+          "Real-world planning and automation",
+          "Instant long-form content creation"
+        ],
+        "notes": "Most hyped upcoming model — OpenAI moving rapidly toward AGI-class systems."
+      }
+    ],
+
+    "Anthropic": [
+      {
+        "model": "Claude 5",
+        "status": "Expected Q2 2026 — some community predictions as early as April 2026",
+        "expected_features": [
+          "Zero hallucinations target",
+          "Deep persistent memory across sessions",
+          "Integrated IDE — Anthropic's own Cursor competitor",
+          "Claude Code features merged into desktop app",
+          "Long, structured research outputs with cited sources"
+        ],
+        "notes": "Reddit community consensus expects Claude 5 by Q2 2026. Anthropic hinted at persistence features as the #1 priority."
+      }
+    ],
+
+    "Google": [
+      {
+        "model": "Gemini 3.5 Ultra",
+        "status": "In development — expected mid-2026",
+        "expected_features": [
+          "Upgraded multimodal reasoning over 3 Pro",
+          "Enhanced video-to-text pipeline",
+          "Deeper Workspace and Vertex AI integration"
+        ]
+      },
+      {
+        "model": "Gemini 4",
+        "status": "In development — expected late 2026",
+        "expected_features": [
+          "Next-generation architecture",
+          "Proactive agent OS (anticipates prompts, manages calendar, travel, logistics)",
+          "Native real-time speech + vision"
+        ],
+        "notes": "Gemini itself predicted: '2026 will see a shift from AI that talks to AI that takes action — proactive operators that anticipate prompts.'"
+      }
+    ],
+
+    "DeepSeek": [
+      {
+        "model": "DeepSeek V4 (MODEL1)",
+        "status": "Expected mid-February 2026 — code leaked on GitHub",
+        "leaked_architecture": [
+          "512-dimensional attention heads (vs standard 128)",
+          "Mixed-precision sparse computing (MoHSA)",
+          "NVIDIA Blackwell GPU co-optimization",
+          "Ultra-long context window (exceeds 1M tokens)",
+          "Hardware co-design: first model co-built with specific GPU architecture"
+        ],
+        "notes": "GitHub accidentally exposed 114 files with 28 'MODEL1' references — represents a full architectural overhaul, not an incremental update."
+      },
+      {
+        "model": "DeepSeek R2",
+        "status": "Expected 2026 — successor to R1",
+        "expected_features": [
+          "Successor to the world-shocking R1 reasoning model",
+          "Enhanced chain-of-thought reasoning",
+          "Improved math and science problem-solving"
+        ],
+        "notes": "R2 will mark the 1-year anniversary of R1's release, which shocked Western AI labs in January 2025."
+      }
+    ],
+
+    "Meta": [
+      {
+        "model": "Llama 5",
+        "status": "Expected H2 2026",
+        "expected_features": [
+          "Successor to Llama 4 Maverick",
+          "Improved multimodal reasoning",
+          "Better fine-tuning efficiency",
+          "Expanded MoE architecture"
+        ]
+      }
+    ],
+
+    "xAI": [
+      {
+        "model": "Grok 4.20",
+        "status": "Expected 2026",
+        "expected_features": [
+          "Extended context beyond 2M tokens",
+          "Deeper real-time X/Twitter and web grounding",
+          "Enhanced agentic task execution"
+        ]
+      }
+    ],
+
+    "Alibaba_Qwen": [
+      {
+        "model": "Qwen 4",
+        "status": "In development — expected mid-2026",
+        "expected_features": [
+          "Successor to Qwen3.5",
+          "Further agentic capabilities",
+          "Larger MoE scale with lower active parameter cost"
+        ]
+      }
+    ],
+
+    "Zhipu_AI": [
+      {
+        "model": "GLM-6",
+        "status": "In development — expected late 2026",
+        "expected_features": [
+          "Successor to GLM-5",
+          "Target: >500K context window",
+          "Better long-document retrieval and reasoning"
+        ]
+      }
+    ]
+  },
+
+  "key_trends_2026": [
+    "Context windows surpassing 1M–2M tokens becoming standard across all frontier models",
+    "MoE (Mixture of Experts) architectures dominating open-source: high params, low active compute cost",
+    "Agentic AI is the primary battleground — every lab is releasing agent-native features",
+    "Chinese open-source models (DeepSeek, Kimi, Qwen, GLM) closing the gap with Western proprietary models",
+    "Hardware co-design: models being built alongside specific GPUs (DeepSeek V4 + Blackwell)",
+    "Claude, Cursor, and VS Code AI Toolkit leading the developer-facing IDE/agent tool war",
+    "Multimodal (text + video + audio + image) becoming table stakes for frontier models"
+  ]
+}
+

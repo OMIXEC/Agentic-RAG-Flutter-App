@@ -1,0 +1,13 @@
+# Install from project root: pip install -e core/
+# Or install dependencies directly:
+pinecone>=5.4.0
+openai>=1.60.0
+sentence-transformers>=3.4.0
+Pillow>=11.0.0
+numpy>=1.26.0
+python-dotenv>=1.0.0
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
+opencv-python>=4.10.0
+pypdf>=5.4.0
+python-docx>=1.1.0
