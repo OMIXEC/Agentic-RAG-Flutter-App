@@ -1,4 +1,4 @@
-# App (Flutter) - RAG Human Mind v2.1
+# App (Flutter) - SynapseMemo
 
 This Flutter app supports:
 - Retrieval chat via backend API (`/v1/memories/chat`)
