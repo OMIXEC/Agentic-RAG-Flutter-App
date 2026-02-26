@@ -1,173 +1,67 @@
-# Multimodal Pinecone RAG Pipeline
+# Agentic RAG Flutter App (SynapseMemo)
 
-This repository now supports full multimodal ingestion/query across:
-- GCP Vertex AI (`multimodalembedding@001`)
-- AWS Bedrock Nova (`amazon.nova-2-multimodal-embeddings-v1:0`)
-- OpenAI text embeddings + CLIP media embeddings (pattern aligned with OpenAI cookbook custom image embedding search)
+A production-grade, multimodal RAG (Retrieval-Augmented Generation) application designed for the "User Life Memory" use case. This repository implements a high-performance vector search backend across multiple cloud providers and a full-featured Flutter mobile companion.
 
-## Supported Input Types
-- Text: `.txt .md .csv .json .yaml .yml .xml`
-- Documents: `.pdf .docx`
-- Images: `.png .jpg .jpeg .webp .bmp`
-- Videos: `.mp4 .mov .mkv .webm .avi`
-- Audio: `.mp3 .wav .m4a .aac .flac .ogg`
+## 🚀 Key Features
 
-## Scripts
-- `pinecone-multimodal-pipeline.py`: shared pipeline core (`--provider openai_clip|vertex|aws_nova`).
-- `ingest-openai.py` / `query-openai.py`: split OpenAI ingest/retrieval.
-- `ingest-vertex.py` / `query-vertex.py`: split Vertex ingest/retrieval.
-- `ingest-aws.py` / `query-aws.py`: split AWS ingest/retrieval.
-- `ingest-legacy.py` / `query-legacy.py`: split legacy multimodal ingest/retrieval.
-- `run-all-providers.py`: interactive runner for one/all providers and ingest/query/both.
-- `pinecone-openai-load.py`: wrapper for OpenAI + CLIP mode.
-- `pinecone-vertexai-load.py`: wrapper for Vertex mode.
-- `pinecone-aws-load.py`: wrapper for AWS Nova mode.
-- `pincecone-openai-load.py`: typo-compatible alias wrapper.
-- `pinecone-db.py`: dispatcher wrapper (provider-specific ingest/query scripts).
-- `backend/main.py`: FastAPI backend for user-isolated Search Memory APIs.
+- **Multimodal Search**: Native support for Text, Images, Video, and Immersive Audio.
+- **Multi-Cloud Integration**: Seamlessly switch between GCP Vertex AI, AWS Bedrock, and OpenAI/Azure.
+- **Immersive Audio Interpretation**: Uses Gemini 2.5 Flash (2026-ready) to interpret raw audio and soundscapes for semantic retrieval.
+- **Unified Embedding Space**: Optimized 1024-3072 dimensional vector space with cross-modal retrieval.
+- **Clean Architecture**: Decoupled core logic from provider-specific implementations.
 
-`pinecone-db.py` now routes to multimodal ingestion/query by default.  
-Set `LEGACY_TXT_ONLY=true` to route through legacy multimodal wrappers.
+## 📂 Project Structure
 
-## Separate Ingest/Retrieve
-```bash
-python ingest-openai.py --namespace user-a
-python query-openai.py --namespace user-a --query "Find latest news image references"
+### [Core Framework](./core/)
 
-python ingest-vertex.py --namespace user-a
-python query-vertex.py --namespace user-a --query "What happened in tech this week?"
+The central `pinecone_rag` library containing shared logic for:
 
-python ingest-aws.py --namespace user-a
-python query-aws.py --namespace user-a --query "Find video memories about travel"
-```
+- Vector state management and Pinecone indexing.
+- Multimodal file processing and chunking.
+- Unified provider interfaces for Vertex, Bedrock, and OpenAI.
 
-Interactive all-providers runner:
-```bash
-python run-all-providers.py
-```
+### [Use Cases](./use-cases/)
 
-## Install
-```bash
-python -m venv env
-source env/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-cp .env app/.env
-```
+Production artifacts and scripts for specific deployment patterns:
 
-## Run Pipelines
+- **[Vertex AI + Pinecone](./use-cases/vertexai-pinecone/)**: Multimodal model embedding via GCP with Gemini 2.5 immersive audio and audio, video, image, text support.
+- **[OpenAI + Pinecone](./use-cases/openai-pinecone/)**: Standard OpenAI embedding pipeline.
+- **[AWS Bedrock + Pinecone](./use-cases/aws-bedrock-pinecone/)**: Native AWS implementation with Nova models (support txt and/or multimodal Nova model).
+- **[Azure OpenAI + Pinecone](./use-cases/azure-openai-pinecone/)**: Enterprise-grade Azure OpenAI integration.
+- **[OpenAI + Chainlit](./use-cases/openai-chainlit/)**: A verified web-based UI for multimodal RAG using Chainlit.
 
-### OpenAI + CLIP
-```bash
-python pinecone-openai-load.py --load
-python pinecone-openai-load.py --query "Find media about architecture"
-```
+### [Flutter Mobile App](./app/)
 
-Strict isolated variant:
-```bash
-cp openai/.env.example openai/.env
-python openai/ensure_pinecone_indexes.py --write-env
-python openai/pinecone-openai-load.py --load
-python openai/pinecone-openai-load.py --query "Find news images and related context"
-```
+A premium Flutter application for life memory capture and retrieval.
 
-### Vertex AI (GCP)
-```bash
-python pinecone-vertexai-load.py --load
-python pinecone-vertexai-load.py --query "What is in the latest news snapshot?"
-```
+## 🛠️ Getting Started
 
-Strict isolated variant:
-```bash
-cp gcp/.env.example gcp/.env
-python gcp/pinecone-vertex-load.py --load
-python gcp/pinecone-vertex-load.py --query "Summarize recent memories"
-```
+1. **Environment Setup**:
 
-### AWS Nova (Bedrock)
-```bash
-python pinecone-aws-load.py --load
-python pinecone-aws-load.py --query "Find references to hard-to-find IDs"
-```
+   ```bash
+   pip install -r requirements.txt
+   cp .env.example .env
+   ```
 
-Strict isolated variant:
-```bash
-cp aws/.env.example aws/.env
-python aws/pinecone-aws-load.py --load
-python aws/pinecone-aws-load.py --query "Find travel videos and related notes"
-```
+2. **Ingest Data (Vertex Example)**:
 
-### Direct Core Invocation
-```bash
-python pinecone-multimodal-pipeline.py --provider aws_nova --load
-python pinecone-multimodal-pipeline.py --provider vertex --query "..."
-```
+   ```bash
+   cd use-cases/vertexai-pinecone
+   python3 main.py --ingest --data-dir data --namespace my-memory
+   ```
 
-## Data Folders
-- `data/txt`
-- `data/image`
-- `data/video`
-- `data/audio`
+3. **Query Data**:
+   ```bash
+   python3 main.py --query "Find memories about my trip to the mountains" --namespace my-memory
+   ```
 
-## Random Test Data Download
-When network is available:
-```bash
-./scripts/download_test_data.sh
-```
+## 🛡️ Best Practices
 
-## Provider Notes
-- OpenAI+CLIP uses two Pinecone indexes (`PINECONE_TEXT_INDEX`, `PINECONE_MEDIA_INDEX`) because text and CLIP vectors have different dimensions.
-  - Strict mode is enforced for separated pipelines: `PINECONE_INDEX_OPENAI_TEXT_3072` and `PINECONE_INDEX_OPENAI_CLIP_512` must be distinct.
-- Vertex mode uses one unified index (`PINECONE_INDEX`) for text/image/video embeddings; audio is transcribed then embedded as text.
-  - Vertex requests now try multiple payload shapes automatically to avoid common `400 Bad Request` schema mismatches.
-- AWS Nova mode uses one unified index (`PINECONE_INDEX`) with native multimodal embedding payloads.
+- **Isolation**: Each use case is self-contained with its own `README.md` and configuration.
+- **Security**: Environment files (`.env`) are recursively excluded from Git.
+- **Robustness**: Integrated file existence checks and graceful error handling for multimodal streams.
 
-## Scale-Safe Index Routing
-- Use dedicated indexes per embedding family to avoid dimension mismatches:
-  - `PINECONE_INDEX_VERTEX_1408`
-  - `PINECONE_INDEX_OPENAI_TEXT_3072`
-  - `PINECONE_INDEX_OPENAI_CLIP_512`
-  - `PINECONE_INDEX_AWS_NOVA_1024`
-- Namespaces are used for partitioning (`PINECONE_NAMESPACE` in scripts, `user_id` namespace in backend APIs).
-- Pipeline now performs pre-upsert dimension validation and fails fast with a clear error before Pinecone rejects writes.
-- Optional host-based clients are supported per index (recommended by Pinecone for faster connect):
-  - `PINECONE_INDEX_HOST_OPENAI_TEXT_3072`
-  - `PINECONE_INDEX_HOST_OPENAI_CLIP_512`
-  - `PINECONE_INDEX_HOST_VERTEX_1408`
-  - `PINECONE_INDEX_HOST_AWS_NOVA_1024`
-  - `PINECONE_INDEX_HOST_LEGACY_TEXT`
-  - `PINECONE_INDEX_HOST_LEGACY_MEDIA`
+## 📜 Documentation
 
-## Unit Tests
-```bash
-python -m unittest discover -s tests -p "test_*.py"
-```
-
-## Search Memory Backend (JWT + User Isolation)
-Run API:
-```bash
-./scripts/run_backend.sh
-```
-
-Alternative:
-```bash
-PYTHONPATH=$(pwd) uvicorn backend.main:app --reload --app-dir $(pwd) --port 8000
-```
-
-Auth:
-- Bearer JWT required on `/v1/memories/*`.
-- `sub` claim is the canonical `user_id`.
-- Pinecone namespace is always `user_id`.
-
-Flutter integration (backend-first):
-- Set `BACKEND_API_BASE_URL` and `BACKEND_AUTH_TOKEN` in `app/.env`.
-- App chat uses `/v1/memories/chat` and renders backend citations.
-
-Key APIs:
-- `POST /v1/memories/upload-url`
-- `POST /v1/memories/ingest`
-- `POST /v1/memories/search`
-- `POST /v1/memories/chat`
-- `GET /v1/memories/timeline`
-- `POST /v1/memories/promote`
-- `DELETE /v1/memories/{memory_id}`
+- [Developer Guide (Vertex)](./use-cases/vertexai-pinecone/DEVELOPER_GUIDE.md)
+- [Deployment Plans](./docs/plans/)

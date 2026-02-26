@@ -1,0 +1,28 @@
+# GCP Cloud Run Deployment — terraform.tfvars.example
+# Copy this to terraform.tfvars and fill in your values.
+
+project_id          = "your-gcp-project-id"
+region              = "us-central1"
+app_name            = "rag-backend"
+min_instances       = 0
+max_instances       = 3
+cpu                 = "1"
+memory              = "512Mi"
+allow_public_access = false
+
+# Non-secret environment variables
+env_vars = {
+  PINECONE_NAMESPACE             = "default"
+  GOOGLE_CLOUD_PROJECT           = "your-gcp-project-id"
+  GOOGLE_CLOUD_LOCATION          = "us-central1"
+  GOOGLE_VERTEX_MODEL            = "multimodalembedding@001"
+  GOOGLE_VERTEX_EMBEDDING_DIMENSION = "1408"
+}
+
+# Secrets (stored in GCP Secret Manager)
+secrets = {
+  PINECONE_API_KEY    = "pcsk-..."
+  OPENAI_API_KEY      = "sk-..."
+  JWT_SECRET          = "your-jwt-secret"
+  DATABASE_URL        = "postgresql+asyncpg://user:pass@host/db"
+}

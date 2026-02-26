@@ -1,0 +1,127 @@
+{
+  "date": "2026-02-19",
+  "source": "Multiple international and Israeli outlets",
+  "top_news": [
+    {
+      "id": 1,
+      "category": "Military / Geopolitics",
+      "headline": "U.S. Strike on Iran May Come This Weekend — Israel on High Alert",
+      "summary": "A Saturday deadline is being speculated for a potential U.S. military strike on Iran's nuclear and missile sites. Israel is on high alert as Iran is said to be pushing Hezbollah to join if war erupts. U.S.-Iran nuclear talks in Geneva were dismissed as a 'nothing burger' by U.S. officials. Netanyahu warned at an IDF officers' graduation that Iran would face an 'unprecedented response' if it attacks Israel.",
+      "region": "Middle East / USA / Israel",
+      "sources": ["Times of Israel", "ILTV", "Al Jazeera"]
+    },
+    {
+      "id": 2,
+      "category": "Diplomacy",
+      "headline": "Trump Hosts 'Board of Peace' Meeting — Gaza Phase 2 Discussed",
+      "summary": "Trump's inaugural Board of Peace convened in Washington with 45+ nations. U.S. officials say they are 'encouraged' by what mediators are reporting from Hamas. Trump is expected to sign resolutions on Gaza at the event.",
+      "region": "USA / Global / Israel",
+      "sources": ["Times of Israel", "The Guardian"]
+    },
+    {
+      "id": 3,
+      "category": "Gaza / Conflict",
+      "headline": "Hamas Cementing Control in Gaza Amid Ceasefire Violations",
+      "summary": "An Israeli military assessment shared with Netanyahu shows Hamas is embedding loyalists in governmental roles, collecting taxes, and paying salaries to maintain control in Gaza 'from the bottom up'. Meanwhile, Israeli forces continued airstrikes and artillery attacks in Gaza, with 603 Palestinians killed since the ceasefire of October 10, 2025 was established.",
+      "region": "Israel / Gaza",
+      "sources": ["Reuters", "Al Jazeera"]
+    },
+    {
+      "id": 4,
+      "category": "West Bank / Military",
+      "headline": "IDF Raids Hebron After Gunfire Reports, Demolishes Terrorist's Home",
+      "summary": "IDF, Shin Bet, and Border Police entered the Jalis neighborhood on the outskirts of Hebron for a broad operation after gunfire reports. The IDF also demolished the home of a terrorist accused of deadly attacks. A 19-year-old Palestinian succumbed to wounds sustained from reported settler gunfire.",
+      "region": "Israel / West Bank",
+      "sources": ["Times of Israel", "IDF War Diary", "Israel National News"]
+    },
+    {
+      "id": 5,
+      "category": "Security / Terror",
+      "headline": "Two Killed in Haifa Shooting Near Corner Store",
+      "summary": "Two people were killed in a shooting near a corner store in Haifa on the night of February 19. Police also fatally shot an 18-year-old motorcyclist in a northern town who fled from authorities and did not heed calls to stop.",
+      "region": "Israel",
+      "sources": ["Times of Israel"]
+    },
+    {
+      "id": 6,
+      "category": "Security / West Bank",
+      "headline": "Mob of Arab Rioters Attacks Jewish Cattle Herders and IDF Soldiers",
+      "summary": "Dozens of Arab rioters attacked Jewish cattle herders and IDF soldiers in the West Bank. An IDF soldier opened fire on one of the rioters during the confrontation.",
+      "region": "Israel / West Bank",
+      "sources": ["Israel National News (Arutz Sheva)"]
+    },
+    {
+      "id": 7,
+      "category": "Military / Underground Infrastructure",
+      "headline": "IDF Dismantles 1km Hamas Tunnel in Northern Gaza",
+      "summary": "IDF troops in northern Gaza located and dismantled a kilometer-long tunnel containing explosive devices and several Hamas hideouts. The tunnel was used as an operational base by Hamas terrorists.",
+      "region": "Israel / Gaza",
+      "sources": ["Israel National News (Arutz Sheva)"]
+    },
+    {
+      "id": 8,
+      "category": "Diplomacy / Religion",
+      "headline": "Temple Mount Tensions During Ramadan in Jerusalem",
+      "summary": "As Ramadan began, Israeli police granted Jewish visitors an extra hour at the Temple Mount. The Palestinian Authority condemned this as a 'dangerous escalation'. Imam Sheikh Akram Sabri stated Israeli authorities are 'imposing a reality by force' through restrictions on Muslim worshippers while allowing extremist Jewish incursions.",
+      "region": "Israel / Jerusalem",
+      "sources": ["Times of Israel", "Al Jazeera"]
+    },
+    {
+      "id": 9,
+      "category": "International / Diplomacy",
+      "headline": "Tucker Carlson Briefly Visits Israel, Meets with U.S. Ambassador Huckabee",
+      "summary": "Conservative commentator Tucker Carlson — known for anti-Israel rhetoric — briefly visited Israel and interviewed U.S. Ambassador Mike Huckabee. A source close to the meeting says Carlson conveyed that Trump wants GOP infighting over Israel reined in.",
+      "region": "Israel / USA",
+      "sources": ["Times of Israel"]
+    },
+    {
+      "id": 10,
+      "category": "UN / Humanitarian",
+      "headline": "UN Warns Israel Is Stoking 'Ethnic Cleansing' Fears",
+      "summary": "The United Nations said Israel is stoking fears of ethnic cleansing in both Gaza and the West Bank through ongoing demolitions, land seizures, and military operations. Over 80 UN member states condemned Israel's move to expand authority over the West Bank and designate Palestinian land as Israeli 'state property'.",
+      "region": "Israel / Gaza / West Bank",
+      "sources": ["Al Jazeera"]
+    },
+    {
+      "id": 11,
+      "category": "Economy / Recovery",
+      "headline": "Israel's Economy Rebounds Sharply in 2026",
+      "summary": "Reporting from early 2026 shows Israel's economy has returned to pre-war (2023) living standards. Total goods exports rose 32.5%, high-tech domestic sales rose 16%, and foreign investor confidence has returned. The government's tax revenues are surging and reducing the deficit. Northern peripheral areas like Shlomi and Metulla still face hardship from rocket damage.",
+      "region": "Israel",
+      "sources": ["Maariv"]
+    },
+    {
+      "id": 12,
+      "category": "Global News",
+      "headline": "South Korea's Former President Yoon Suk Yeol Sentenced to Life in Prison",
+      "summary": "Seoul court found Yoon guilty of insurrection following his failed martial law declaration in December 2024. He was sentenced to life in prison with hard labor.",
+      "region": "Asia / South Korea",
+      "sources": ["Democracy Now"]
+    },
+    {
+      "id": 13,
+      "category": "Global News",
+      "headline": "Russian Drone Kills 15 Mineworkers in Dnipro, Ukraine",
+      "summary": "A Russian drone struck a minibus transporting workers near Dnipro, Ukraine, killing 15 and injuring 7 others.",
+      "region": "Europe / Ukraine",
+      "sources": ["BBC News"]
+    },
+    {
+      "id": 14,
+      "category": "Global News",
+      "headline": "Saudi Arabia and Syria Sign $1B Investment Deals",
+      "summary": "Saudi Arabia and Syria signed a $1 billion telecom project, a joint low-cost airline, and a new international airport in Aleppo — following the lifting of U.S. sanctions on Syria.",
+      "region": "Middle East",
+      "sources": ["AFP / The Straits Times"]
+    },
+    {
+      "id": 15,
+      "category": "Global News / Human Rights",
+      "headline": "Gaza Death Toll Far Higher Than Reported — Lancet Study",
+      "summary": "A new Lancet medical journal study found that Israel's assault on Gaza has killed far more Palestinians than previously reported, exceeding earlier official estimates significantly.",
+      "region": "Gaza / Global",
+      "sources": ["Democracy Now / The Lancet"]
+    }
+  ]
+}
+

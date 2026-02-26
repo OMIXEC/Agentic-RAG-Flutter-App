@@ -1,0 +1,22 @@
+# AWS ECS Deployment — terraform.tfvars.example
+# Copy to terraform.tfvars and fill in your values.
+
+aws_region    = "us-east-1"
+app_name      = "rag-backend"
+cpu           = "256"
+memory        = "512"
+desired_count = 1
+
+env_vars = {
+  PINECONE_NAMESPACE           = "default"
+  AWS_REGION                   = "us-east-1"
+  AWS_NOVA_EMBEDDING_MODEL     = "amazon.nova-2-multimodal-embeddings-v1:0"
+  AWS_NOVA_EMBEDDING_DIMENSION = "1024"
+}
+
+secrets = {
+  PINECONE_API_KEY    = "pcsk-..."
+  OPENAI_API_KEY      = "sk-..."
+  JWT_SECRET          = "your-jwt-secret"
+  DATABASE_URL        = "postgresql+asyncpg://user:pass@host/db"
+}

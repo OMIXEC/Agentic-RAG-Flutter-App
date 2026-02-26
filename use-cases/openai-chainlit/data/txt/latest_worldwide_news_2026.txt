@@ -1,0 +1,103 @@
+{
+  "date": "2026-02-19",
+  "source": "Multiple international outlets",
+  "top_news": [
+    {
+      "id": 1,
+      "category": "Military / Geopolitics",
+      "headline": "U.S. Military Positions for Possible Strike on Iran This Weekend",
+      "summary": "The U.S. is deploying a second aircraft carrier, the USS Gerald Ford, to the Persian Gulf alongside the USS Abraham Lincoln. Trump administration officials cite a 90% likelihood of military action against Iran's nuclear and missile sites, though Trump has not made a final decision. Indirect U.S.-Iran talks in Geneva ended without a clear resolution.",
+      "region": "Middle East / USA",
+      "sources": ["CNN", "The Guardian"]
+    },
+    {
+      "id": 2,
+      "category": "Diplomacy",
+      "headline": "Trump Hosts Inaugural 'Board of Peace' Meeting in Washington",
+      "summary": "More than 45 countries attended Trump's first Board of Peace meeting in Washington DC, focused on the Gaza conflict. European nations largely kept their distance, while Asian and Middle Eastern partners participated.",
+      "region": "USA / Global",
+      "sources": ["Al Jazeera", "The Guardian"]
+    },
+    {
+      "id": 3,
+      "category": "Conflict / Humanitarian",
+      "headline": "Gaza Death Toll Exceeds 75,000",
+      "summary": "Independent research published in leading medical journals verified over 75,000 violent deaths in Gaza since the conflict began. The figures far exceed previous official estimates.",
+      "region": "Middle East",
+      "sources": ["GoLocalProv"]
+    },
+    {
+      "id": 4,
+      "category": "Politics / Law",
+      "headline": "South Korea's Former President Yoon Suk Yeol Sentenced to Life in Prison",
+      "summary": "A Seoul court found Yoon Suk Yeol guilty of leading an insurrection during his failed attempt to declare martial law in December 2024. The verdict, broadcast live, resulted in a life sentence with hard labor. Yoon had faced the possibility of the death penalty.",
+      "region": "Asia / South Korea",
+      "sources": ["Havana Times / Democracy Now"]
+    },
+    {
+      "id": 5,
+      "category": "Technology / War",
+      "headline": "Musk Cuts Starlink Access for Russian Forces, Boosting Ukraine",
+      "summary": "Elon Musk has cut Starlink satellite internet access for Russian military forces. Ukrainian troops report that Russian units are suffering setbacks at the front due to reduced communication capabilities.",
+      "region": "Europe / Ukraine",
+      "sources": ["BBC News"]
+    },
+    {
+      "id": 6,
+      "category": "Crime",
+      "headline": "Robert Mugabe's Son Bellarmine Arrested in South Africa After Shooting",
+      "summary": "Bellarmine Mugabe, son of the late Zimbabwean president Robert Mugabe, was arrested in Johannesburg, South Africa, after allegedly shooting a security guard at a property.",
+      "region": "Africa / South Africa",
+      "sources": ["BBC News"]
+    },
+    {
+      "id": 7,
+      "category": "Crime / Tragedy",
+      "headline": "School Shooting in Tumbler Ridge, Canada — 9 Killed",
+      "summary": "Nine people, including the suspect, were killed in a shooting at Tumbler Ridge Secondary School in British Columbia, Canada.",
+      "region": "North America / Canada",
+      "sources": ["CBC News via Wikipedia Current Events"]
+    },
+    {
+      "id": 8,
+      "category": "Human Rights",
+      "headline": "Iranian Nobel Laureate Narges Mohammadi Sentenced to 7.5 Years in Prison",
+      "summary": "An Iranian court sentenced 2023 Nobel Peace Prize laureate Narges Mohammadi to seven years and six months in prison plus two years of internal exile for collusion and propaganda-related charges.",
+      "region": "Middle East / Iran",
+      "sources": ["AFP via Wikipedia Current Events"]
+    },
+    {
+      "id": 9,
+      "category": "Diplomacy / Nuclear",
+      "headline": "US Vice President JD Vance Visits Armenia; Nuclear Deal Reached",
+      "summary": "JD Vance became the highest-ranking U.S. official ever to visit Armenia. He met PM Nikol Pashinyan to discuss the Armenia-Azerbaijan peace process. The two countries also signed a nuclear energy deal worth up to $9 billion in U.S. exports.",
+      "region": "Europe / Caucasus",
+      "sources": ["AP, Reuters via Wikipedia Current Events"]
+    },
+    {
+      "id": 10,
+      "category": "Business / Diplomacy",
+      "headline": "Saudi Arabia and Syria Sign $1 Billion Telecom and Aviation Agreements",
+      "summary": "Saudi Arabia and Syria signed a suite of investment agreements including a joint low-cost airline, a new international airport in Aleppo, and a $1 billion telecommunications project, following the recent lifting of U.S. sanctions on Syria.",
+      "region": "Middle East",
+      "sources": ["AFP via The Straits Times / Wikipedia Current Events"]
+    },
+    {
+      "id": 11,
+      "category": "War / Conflict",
+      "headline": "Russian Drone Kills 15 Mineworkers in Dnipro, Ukraine",
+      "summary": "A Russian drone strike hit a minibus transporting mineworkers in Dnipro, Ukraine, killing at least 15 people and injuring seven others.",
+      "region": "Europe / Ukraine",
+      "sources": ["BBC News via Wikipedia Current Events"]
+    },
+    {
+      "id": 12,
+      "category": "Politics / Latin America",
+      "headline": "Putin Slams U.S. Oil Blockade of Cuba",
+      "summary": "Russian President Vladimir Putin met with Cuba's foreign minister in Moscow and pledged support for Cuba amid a U.S. oil embargo that has caused severe fuel shortages and blackouts across the island.",
+      "region": "Latin America / Russia",
+      "sources": ["Havana Times / Democracy Now"]
+    }
+  ]
+}
+

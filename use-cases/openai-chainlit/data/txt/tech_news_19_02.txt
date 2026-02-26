@@ -1,0 +1,82 @@
+{
+  "date": "2026-02-19",
+  "curated_for": "Senior Cloud Engineer / AI Builder / Startup Founder",
+  "tech_news": [
+
+    {
+      "section": "🧠 LLM Model Releases",
+      "stories": [
+        {
+          "id": 1,
+          "headline": "February 2026: Largest AI Model Rush in History — 7 Major Models Drop Simultaneously",
+          "summary": "Gemini 3 Pro GA, Claude Sonnet 5, GPT-5.3, Qwen 3.5, GLM 5, DeepSeek V4, and Grok 4.20 are all launching in February 2026, making it the most competitive single-month LLM release window ever recorded.",
+          "relevance": "Directly impacts which model you choose for your accessibility app backend, RAG systems, and SaaS platform inference layer.",
+          "sources": ["jangwook.net", "euronews.com"]
+        },
+        {
+          "id": 2,
+          "headline": "Claude 4.6 Opus Debuts with 1M Context Window and Agent Teams",
+          "summary": "Anthropic released Claude Opus 4.6 featuring a 1 million token context window (beta), 128K output capacity, adaptive thinking, effort controls, and a new Agent Teams feature enabling multi-agent agentic workflows natively in the API. It is currently ranked #1 among proprietary LLMs on LogRocket's Feb 2026 AI dev tool power rankings.",
+          "relevance": "Critical for your real-time agentic systems project. Agent Teams pairs well with ADK/LiveKit orchestration you are already using.",
+          "sources": ["blog.logrocket.com", "marketingprofs.com"]
+        },
+        {
+          "id": 3,
+          "headline": "DeepSeek Expands Context Window to 1 Million Tokens Ahead of V4 Launch",
+          "summary": "DeepSeek expanded its existing model's context window from 128K to 1 million tokens and is expected to release V4 (replacing V3) and R2 (successor to R1). DeepSeek's models continue to lead on math, coding, and logical reasoning benchmarks while remaining open-weight.",
+          "relevance": "Key model to benchmark for your local on-device inference experiments and RAG pipelines.",
+          "sources": ["humai.blog"]
+        },
+        {
+          "id": 4,
+          "headline": "Alibaba Qwen3.5 Launches for 'Agentic Era' — Targets Multi-Step Autonomous Tasks",
+          "summary": "Alibaba released Qwen3.5, explicitly designed for agentic use cases: complex multi-step task execution, tool calling, and autonomous pipelines. It is a top-ranked open-source contender for February 2026.",
+          "relevance": "Strong candidate for your open-source agent stack — especially for RAG + tool-calling patterns in your SaaS cert platform.",
+          "sources": ["euronews.com", "humai.blog"]
+        },
+        {
+          "id": 5,
+          "headline": "GLM-5 Tops Open Source Rankings with 203K Context Window",
+          "summary": "GLM-5 by Zhipu AI (Z AI) was released under an open license with a 203K context window, claiming the #1 spot on the February 2026 open-source LLM leaderboard with top Quality scores across coding, reasoning, and multilingual tasks.",
+          "relevance": "A strong open-weight alternative for your smart glasses app where local inference matters.",
+          "sources": ["whatllm.org"]
+        }
+      ]
+    },
+
+    {
+      "section": "🛠️ Developer Tools & AI Coding",
+      "stories": [
+        {
+          "id": 6,
+          "headline": "Cursor 2.0 Launches with 8 Parallel Agents, Composer Model, and Plan Mode",
+          "summary": "Cursor 2.0 ships the new Composer model (4x faster than competitors), a redesigned multi-agent interface supporting up to 8 agents running in parallel, Plan Mode with editable Markdown plans, a visual editor bridging design and code, and enterprise features including shared transcripts, granular billing, and Linux sandboxing.",
+          "relevance": "Game changer for your full-stack SaaS development workflow — 8 parallel agents can handle frontend, backend, tests, and infra simultaneously.",
+          "sources": ["blog.logrocket.com"]
+        },
+        {
+          "id": 7,
+          "headline": "Microsoft AI Toolkit for VS Code v0.30.0 — Adds OpenAI Response API + Multi-Agent Workflows",
+          "summary": "VS Code AI Toolkit February 2026 update (v0.30.0) adds support for models using the OpenAI Response API including gpt-5.2-codex, a new Workflow entry point for generating multi-agent workflows with GitHub Copilot, Qualcomm GPU recipes for edge/on-device inference, and interactive playgrounds for historical models.",
+          "relevance": "Directly useful for your multimodal and on-device inference projects — Qualcomm GPU recipes are especially relevant for smart glasses deployment.",
+          "sources": ["techcommunity.microsoft.com"]
+        },
+        {
+          "id": 8,
+          "headline": "Claude Code, Gemini CLI, and Kimi Code Enter AI Dev Tool Power Rankings",
+          "summary": "The February 2026 AI dev tool power rankings now include Claude Code (Anthropic's terminal-native coding agent), Gemini CLI (Google's command-line AI model interface), and Kimi Code (new entry from Moonshot AI), joining existing leaders like GitHub Copilot, Cursor, Windsurf, and Bolt.new.",
+          "relevance": "Claude Code is particularly aligned with your Python/FastAPI/Flutter workflow. Consider testing Gemini CLI for GCP-native workflows.",
+          "sources": ["blog.logrocket.com"]
+        },
+        {
+          "id": 9,
+          "headline": "AlphaCode 3 Released — Contextual Debugging + Deployment-Ready Automation",
+          "summary": "Google DeepMind's AlphaCode 3 builds on earlier versions with advanced contextual debugging, real-time pair programming, and deployment-ready automation trained on billions of lines of verified code — targeting complex framework-level development.",
+          "relevance": "Worth evaluating for your SaaS cert platform backend — especially for auto-generating boilerplate FastAPI and TypeScript modules.",
+          "sources": ["webpeak.org"]
+        },
+        {
+          "id": 10,
+          "headline": "Snyk Launches 'Agent Fix' — AI-Generated Security Patches That Auto-Retest",
+          "summary": "Snyk's 2026 release introduces Agent Fix: an AI model that generates security patches for vulnerabilities ac
+
